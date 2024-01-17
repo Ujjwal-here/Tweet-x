@@ -1,4 +1,3 @@
-import SignupImage from "../../public/Images/signup_tweetx.svg"
 
 export const Signup = () => {
     return (
@@ -13,7 +12,7 @@ export const Signup = () => {
                     <input placeholder="Password"/>
                     <input placeholder="Confirm Password"/>
                 </div>
-                <img src={SignupImage} alt="Signup-Tweetx"/>
+                <img src="/Images/signup_tweetx.svg" alt="Signup-Tweetx"/>
             </div>
 
             <button>Submit</button>
