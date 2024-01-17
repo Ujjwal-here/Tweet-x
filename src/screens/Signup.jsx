@@ -6,10 +6,10 @@ export const Signup = () => {
             <h1 className="text-[#5D676E] font-semibold lg:mt-8 lg:mb-4 lg:text-3xl">Create Account</h1>
             <div className="flex flex-row">
                 <div className="flex-1 flex flex-col gap-8 lg:my-8 lg:pr-80">
-                    <input className="bg-[#f9f9f9] rounded lg:p-4 " placeholder="Name"/>
-                    <input className="bg-[#f9f9f9] rounded lg:p-4" placeholder="Email"/>
-                    <input className="bg-[#f9f9f9] rounded lg:p-4" placeholder="Password"/>
-                    <input className="bg-[#f9f9f9] rounded lg:p-4" placeholder="Confirm Password"/>
+                    <input className="bg-[#f9f9f9] rounded lg:p-4 lg:text-sm" placeholder="Name"/>
+                    <input className="bg-[#f9f9f9] rounded lg:p-4 lg:text-sm" placeholder="Email"/>
+                    <input className="bg-[#f9f9f9] rounded lg:p-4 lg:text-sm" placeholder="Password"/>
+                    <input className="bg-[#f9f9f9] rounded lg:p-4 lg:text-sm" placeholder="Confirm Password"/>
                 </div>
                 <div>
                     <img className="h-96" src="/Images/signup_tweetx.svg" alt="Signup-Tweetx"/>
