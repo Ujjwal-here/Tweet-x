@@ -1,4 +1,4 @@
-export const Signup = () => {
+export const SignupScreen = () => {
     return (
         <div className="py-10 px-28">
             <h3 className="text-[#FF748D] font-medium lg:text-2xl">TweetX</h3>
@@ -12,7 +12,7 @@ export const Signup = () => {
                     <input className="bg-[#f9f9f9] rounded lg:p-4 lg:text-sm" placeholder="Confirm Password"/>
                 </div>
                 <div>
-                    <img className="h-96" src="/Images/signup_tweetx.svg" alt="Signup-Tweetx"/>
+                    <img className="h-96" src="/Images/signup_tweetx.svg" alt="SignupScreen-Tweetx"/>
                 </div>
             </div>
 

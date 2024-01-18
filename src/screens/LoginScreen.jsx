@@ -1,4 +1,4 @@
-export const Login = () => {
+export const LoginScreen = () => {
     return (
         <div className="py-10 px-28">
             <h3 className="text-[#FF748D] font-medium lg:text-2xl">TweetX</h3>
@@ -18,7 +18,7 @@ export const Login = () => {
 
                 </div>
                 <div>
-                    <img className="h-96" src="/Images/login-tweetx.svg" alt="Signup-Tweetx"/>
+                    <img className="h-96" src="/Images/login-tweetx.svg" alt="SignupScreen-Tweetx"/>
                 </div>
             </div>
         </div>
