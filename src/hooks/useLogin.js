@@ -22,6 +22,7 @@ const useLogin = () => {
         }
         catch (e){
             setError(e.message)
+            setIsLoading(false)
         }
     }
     return {isLoading,setIsLoading,error,setError,formRef,loginHandleSubmit}
