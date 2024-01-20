@@ -1,4 +1,5 @@
 import {useSignup} from "../hooks/useSignUp";
+import {Link} from "react-router-dom";
 
 
 export const SignupScreen = () => {
@@ -8,7 +9,7 @@ export const SignupScreen = () => {
     return (
         <div className="py-10 px-28">
             <h3 className="text-[#FF748D] font-medium lg:text-2xl">TweetX</h3>
-            <button className="border-2 border-[#C1C1C1] rounded-xl lg:my-10 lg:py-2 lg:px-16 lg:text-sm lg:font-medium">Login</button>
+            <Link to="/login" ><button className="border-2 border-[#C1C1C1] rounded-xl lg:my-10 lg:py-2 lg:px-16 lg:text-sm lg:font-medium">Login</button></Link>
             <h1 className="text-[#5D676E] font-semibold lg:mt-8 lg:mb-4 lg:text-3xl">Create Account</h1>
             <div className="flex flex-row">
                 <form ref={formRef} className="flex-1 flex flex-col gap-8 lg:my-8 lg:pr-80">
