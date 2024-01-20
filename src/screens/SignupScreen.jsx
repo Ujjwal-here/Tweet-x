@@ -1,33 +1,9 @@
-import {useRef, useState} from "react";
-import {createUserWithEmailAndPassword} from "firebase/auth"
-import {doc, setDoc} from "firebase/firestore"
-import {auth} from "../firebase/config";
+import {useSignup} from "../hooks/useSignUp";
+
 
 export const SignupScreen = () => {
-    const [isLoading, setIsLoading] = useState(false)
-    const [error, setError] = useState("")
-    const formRef = useRef()
 
-
-    async function handleSubmit(e){
-        setIsLoading(true)
-        e.preventDefault()
-        const name= formRef.current[0].value
-        const email= formRef.current[1].value
-        const password= formRef.current[1].value
-        const confirmPassword= formRef.current[1].value
-        try {
-            if (password!==confirmPassword){
-                return setError("Passwords do not match")
-            }
-            const userCredentials= await createUserWithEmailAndPassword(auth,email,password)
-            console.log(userCredentials)
-            setIsLoading(false)
-        }
-        catch (e){
-            setError(e.message)
-        }
-    }
+    const {isLoading,setIsLoading,error,setError,formRef,handleSubmit} = useSignup()
 
     return (
         <div className="py-10 px-28">
