@@ -1,5 +1,6 @@
 import {useSignup} from "../hooks/useSignUp";
 import {Link} from "react-router-dom";
+import {ClipLoader} from "react-spinners";
 
 
 export const SignupScreen = () => {
@@ -22,7 +23,11 @@ export const SignupScreen = () => {
                     <input className="bg-[#f9f9f9] rounded lg:p-4 lg:text-sm"
                            type="password" placeholder="Confirm Password" name="confirmPassword"/>
                     <button onClick={handleSubmit}
-                            className="bg-[#FF748D] text-white rounded font-normal lg:text-sm lg:px-4 lg:py-2">Sign up
+                            className="bg-[#FF748D] text-white rounded font-normal lg:text-sm lg:px-4 lg:py-2">
+                        {isLoading ? <ClipLoader
+                            size={10}
+                            color="white"
+                        /> : "Signup"}
                     </button>
                 </form>
                 <div>
