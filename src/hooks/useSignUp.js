@@ -29,7 +29,7 @@ export const useSignup = () => {
                 email
             });
             setIsLoading(false)
-            navigate("/")
+            navigate("/feed")
         } catch (e) {
             setError(e.message)
             setIsLoading(false)
