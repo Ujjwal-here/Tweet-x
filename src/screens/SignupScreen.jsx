@@ -5,7 +5,8 @@ import {auth} from "../firebase/config";
 
 export const SignupScreen = () => {
     const [isLoading, setIsLoading] = useState(false)
-
+    // const [error, setError] = useState("")
+    const formRef = useRef()
 
 
 
