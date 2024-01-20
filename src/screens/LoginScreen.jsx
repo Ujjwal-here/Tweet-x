@@ -1,6 +1,8 @@
 import {Link} from "react-router-dom";
+import useLogin from "../hooks/useLogin";
 
 export const LoginScreen = () => {
+    const {formRef} = useLogin()
     return (
         <div className="lg:py-10 lg:px-28">
             <h3 className="text-[#FF748D] font-medium lg:text-2xl">TweetX</h3>
@@ -13,7 +15,7 @@ export const LoginScreen = () => {
 
             <h1 className="text-[#5D676E] font-semibold lg:mt-8 lg:mb-4 lg:text-3xl">Login</h1>
             <div className="flex flex-row">
-                <form className="flex-1 flex flex-col lg:gap-8 lg:my-8 lg:pr-80">
+                <form ref={formRef} className="flex-1 flex flex-col lg:gap-8 lg:my-8 lg:pr-80">
                     <input className="bg-[#f9f9f9] rounded lg:p-4 lg:text-sm" placeholder="Email"/>
                     <input className="bg-[#f9f9f9] rounded lg:p-4 lg:text-sm" placeholder="Password"/>
                     <div className="flex flex-row justify-between items-center lg:my-5">
