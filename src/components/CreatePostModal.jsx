@@ -2,7 +2,10 @@ import {useContext} from "react";
 import {TweetXContext} from "../context/TweetXContext";
 
 export const CreatePostModal = () => {
-
+    const {isOpen,setIsOpen} = useContext(TweetXContext)
+    function closeModalHandler() {
+        setIsOpen(prevState => !prevState)
+    }
 
     return (
         <>
