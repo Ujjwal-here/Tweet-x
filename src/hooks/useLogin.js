@@ -17,6 +17,7 @@ const useLogin = () => {
         try{
             const userCredential = await signInWithEmailAndPassword(auth,email,password)
             localStorage.setItem("token", userCredential.user.accessToken)
+            localStorage.setItem("uid", userCredential.user.uid)
             setIsLoading(false)
             navigate("/feed")
         }
