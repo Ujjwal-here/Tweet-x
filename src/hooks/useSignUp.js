@@ -22,13 +22,17 @@ export const useSignup = () => {
                 return setError("Passwords do not match")
             }
             const userCredentials = await createUserWithEmailAndPassword(auth, email, password)
-            localStorage.setItem("token", userCredentials.user.accessToken)
+            const uid = userCredentials.user.uid
+            const token = userCredentials.user.accessToken
+            localStorage.setItem("token", token)
+            localStorage.setItem("uid", uid)
             await addDoc(collection(db, "users"), {
-                uid: userCredentials.user.uid,
+                uid,
                 name,
-                email
+                email,
+                followers:[],
+                following: []
             });
-            setIsLoading(false)
             navigate("/feed")
         } catch (e) {
             setError(e.message)
