@@ -1,4 +1,4 @@
-export const UserCard = () => {
+export const UserCard = ({user}) => {
     return (
         <div className="lg:px-24">
             <div className="flex flex-row justify-between items-center">
@@ -9,8 +9,8 @@ export const UserCard = () => {
                              alt="profile_pic"/>
                     </div>
                     <div>
-                        <h3 className="font-medium text-lg text-[#8F8F8F]">Arjun Reddy</h3>
-                        <p className="font-light text-xs text-[#8F8F8F] lg:my-1">Following : 200</p>
+                        <h3 className="font-medium text-lg text-[#8F8F8F]">{user.name}</h3>
+                        <p className="font-light text-xs text-[#8F8F8F] lg:my-1">Following : {user.following.length}</p>
                     </div>
                 </div>
                 <div>
