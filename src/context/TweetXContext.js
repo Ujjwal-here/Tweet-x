@@ -1,6 +1,7 @@
 import {createContext, useRef, useState} from "react";
 import {addDoc, collection} from "firebase/firestore";
 import {db} from "../firebase/config";
+import {Timestamp} from "firebase/firestore";
 
 export const TweetXContext = createContext(null);
 export const TweetXProvider = ({children}) => {
@@ -21,6 +22,7 @@ export const TweetXProvider = ({children}) => {
                 uid,
                 name,
                 description,
+                timestamp: Timestamp.now()
             });
             setIsLoading(prevState => !prevState)
         }
