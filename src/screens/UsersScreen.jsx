@@ -27,7 +27,7 @@ export const UsersScreen = () => {
     console.log(usersData)
     return (
         <div className="lg:mx-96 lg:my-20">
-            {usersData && usersData.map((user)=>{
+            {usersData && usersData.map((user) => {
                 return <UserCard key={user.uid} user={user}/>
             })}
         </div>
