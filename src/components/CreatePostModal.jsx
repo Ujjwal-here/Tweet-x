@@ -1,12 +1,57 @@
-import {useContext} from "react";
+import {useContext, useEffect} from "react";
 import {TweetXContext} from "../context/TweetXContext";
+import {doc, setDoc, Timestamp} from "firebase/firestore";
+import {db} from "../firebase/config";
+import {ClipLoader} from "react-spinners";
 
 export const CreatePostModal = () => {
-    const {isOpen, setIsOpen, formRef, createPostHandler} = useContext(TweetXContext)
+    const {
+        isOpen,
+        setIsOpen,
+        isLoading,
+        setIsLoading,
+        success,
+        setSuccess,
+        error,
+        setError,
+        postFormRef
+    } = useContext(TweetXContext)
+
     function closeModalHandler() {
-        setIsOpen(prevState => !prevState)
+        setIsOpen(false)
     }
 
+    async function createPostHandler(e) {
+        e.preventDefault()
+        const name = postFormRef.current[0].value
+        const description = postFormRef.current[1].value
+        try {
+            setIsLoading(true)
+            const uid = localStorage.getItem("uid")
+            const docRef = doc(db, 'posts', uid)
+            const result = await setDoc(docRef, {
+                uid,
+                name,
+                description,
+                timestamp: Timestamp.now()
+            })
+            setIsLoading(false)
+            setSuccess("Post Created Successfully")
+        } catch (e) {
+            setError(e.message)
+            setIsLoading(false)
+        }
+
+        setIsOpen(false)
+    }
+
+    useEffect(() => {
+        return () => {
+            setIsLoading(false)
+            setError("")
+            setSuccess("")
+        }
+    }, []);
     return (
         <>
             <div id="crud-modal" tabIndex="-1" aria-hidden="true"
@@ -29,7 +74,7 @@ export const CreatePostModal = () => {
                                 <span className="sr-only">Close modal</span>
                             </button>
                         </div>
-                        <form ref={formRef} className="p-4 md:p-5">
+                        <form ref={postFormRef} className="p-4 md:p-5">
                             <div className="grid gap-4 mb-4 grid-cols-2">
                                 <div className="col-span-2">
                                     <label htmlFor="name"
@@ -48,14 +93,17 @@ export const CreatePostModal = () => {
                                 </div>
                             </div>
                             <button onClick={createPostHandler} type="submit"
-                                    className="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                    className="text-white inline-flex items-center bg-[#FF748D] font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                                 <svg className="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                                      xmlns="http://www.w3.org/2000/svg">
                                     <path fillRule="evenodd"
                                           d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
                                           clipRule="evenodd"></path>
                                 </svg>
-                                Create Post
+                                {isLoading ? <ClipLoader
+                                    size={10}
+                                    color="white"
+                                /> : "Create Post"}
                             </button>
                         </form>
                     </div>
