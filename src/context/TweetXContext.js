@@ -1,5 +1,5 @@
 import {createContext, useRef, useState} from "react";
-import {addDoc, collection} from "firebase/firestore";
+import {addDoc, collection, doc, setDoc} from "firebase/firestore";
 import {db} from "../firebase/config";
 import {Timestamp} from "firebase/firestore";
 
@@ -17,13 +17,13 @@ export const TweetXProvider = ({children}) => {
         const description= formRef.current[1].value
         try{
             const uid= localStorage.getItem("uid")
-            console.log(name,description,uid)
-            await addDoc(collection(db, "posts"), {
+            const docRef = doc(db, 'posts', uid)
+            const result = await setDoc(docRef, {
                 uid,
                 name,
                 description,
                 timestamp: Timestamp.now()
-            });
+            })
             setIsLoading(prevState => !prevState)
         }
         catch (e) {
