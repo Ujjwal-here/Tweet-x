@@ -1,7 +1,7 @@
 import {useRef, useState} from "react";
 import {createUserWithEmailAndPassword} from "firebase/auth";
 import {auth, db} from "../firebase/config";
-import {addDoc, collection} from "firebase/firestore";
+import {addDoc, collection,doc,setDoc} from "firebase/firestore";
 import {useNavigate} from "react-router-dom";
 
 export const useSignup = () => {
@@ -26,13 +26,15 @@ export const useSignup = () => {
             const token = userCredentials.user.accessToken
             localStorage.setItem("token", token)
             localStorage.setItem("uid", uid)
-            await addDoc(collection(db, "users"), {
+            const docRef = doc(db, 'users', uid)
+            const result = await setDoc(docRef, {
                 uid,
                 name,
                 email,
                 followers:[],
                 following: []
-            });
+            })
+            setIsLoading(false)
             navigate("/feed")
         } catch (e) {
             setError(e.message)
