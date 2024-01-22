@@ -1,14 +1,23 @@
 import {useSignup} from "../hooks/useSignUp";
 import {Link} from "react-router-dom";
 import {ClipLoader} from "react-spinners";
-import {useContext} from "react";
+import {useContext, useEffect} from "react";
 import {TweetXContext} from "../context/TweetXContext";
+import {ErrorMessage} from "../components/ErrorMessage";
+import {SuccessMessage} from "../components/SuccessMessage";
 
 
 export const SignupScreen = () => {
-    const {isLoading, error, setError} = useContext(TweetXContext)
+    const {isLoading, setIsLoading, success, setSuccess, error, setError} = useContext(TweetXContext)
     const {signUpFormRef, handleSignup} = useSignup()
 
+    useEffect(() => {
+        return () => {
+            setError("")
+            setIsLoading(false)
+            setSuccess("")
+        }
+    }, []);
     return (
         <div className="md:py-8 md:px-48 xl:py-10 xl:px-28 flex flex-row justify-between items-center md:gap-28 xl:gap-32">
             <div className="flex-1">
@@ -38,6 +47,8 @@ export const SignupScreen = () => {
                                 /> : "Sign up"}
                             </button>
                         </div>
+                        {error && <ErrorMessage message={error}/>}
+                        {success && <SuccessMessage message={success}/>}
                     </form>
                 </div>
             </div>
