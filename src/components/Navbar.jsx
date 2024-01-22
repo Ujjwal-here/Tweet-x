@@ -36,9 +36,9 @@ export const Navbar = () => {
         <div className="shadow-md flex flex-row justify-between items-center md:px-20 md:py-4 xl:py-4 xl:px-32">
             <h1 className="md:text-xl xl:text-2xl text-[#FF748D] font-bold">TweetX</h1>
             <ul className="flex flex-row md:gap-10 xl:gap-20">
-                <Link to="/feed" className="text-[#E8EAED] md:text-sm">Feed</Link>
-                <Link to="/users" className="text-[#E8EAED] md:text-sm">Users</Link>
-                <Link to="/profile" className="text-[#E8EAED] md:text-sm">Profile</Link>
+                <Link to="/feed" className="text-[#E8EAED] md:text-sm xl:text-lg">Feed</Link>
+                <Link to="/users" className="text-[#E8EAED] md:text-sm xl:text-lg">Users</Link>
+                <Link to="/profile" className="text-[#E8EAED] md:text-sm xl:text-lg">Profile</Link>
             </ul>
             <button onClick={logoutHandler} data-modal-target="authentication-modal"
                     data-modal-toggle="authentication-modal"
