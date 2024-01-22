@@ -10,7 +10,7 @@ export const ErrorMessage = ({message}) => {
             </svg>
             <span className="sr-only">Info</span>
             <div>
-                <span className="font-medium">Danger alert!</span>{message}
+                <span className="font-medium">{message}</span>
             </div>
         </div>
     )
