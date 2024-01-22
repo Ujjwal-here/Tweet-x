@@ -1,39 +1,62 @@
 import {Link} from "react-router-dom";
-import useLogin from "../hooks/useLogin";
 import {ClipLoader} from "react-spinners";
+import {useContext, useEffect} from "react";
+import {TweetXContext} from "../context/TweetXContext";
+import {ErrorMessage} from "../components/ErrorMessage";
+import {SuccessMessage} from "../components/SuccessMessage";
+import useLogin from "../hooks/useLogin";
 
 export const LoginScreen = () => {
-    const {isLoading,setIsLoading,error,setError,formRef,loginHandleSubmit} = useLogin()
-    return (
-        <div className="lg:py-10 lg:px-28">
-            <h3 className="text-[#FF748D] font-medium lg:text-2xl">TweetX</h3>
-            <Link to="/signup">
-                <button
-                    className="border-2 border-[#C1C1C1] rounded-xl lg:my-10 lg:py-3 lg:px-10 lg:text-sm lg:font-medium">Create
-                    Account
-                </button>
-            </Link>
+    const {isLoading, setIsLoading, success, setSuccess, error, setError} = useContext(TweetXContext)
+    const {loginFormRef, handleLogin} = useLogin()
 
-            <h1 className="text-[#5D676E] font-semibold lg:mt-8 lg:mb-4 lg:text-3xl">Login</h1>
-            <div className="flex flex-row">
-                <form ref={formRef} className="flex-1 flex flex-col lg:gap-8 lg:my-8 lg:pr-80">
-                    <input type="email" className="bg-[#f9f9f9] rounded lg:p-4 lg:text-sm" placeholder="Email" name="email"/>
-                    <input type="password" className="bg-[#f9f9f9] rounded lg:p-4 lg:text-sm" placeholder="Password" name="password"/>
-                    <div className="flex flex-row justify-between items-center lg:my-5">
-                        <span className="text-sm">Forgot Password?</span>
-                        <button onClick={loginHandleSubmit}
-                                className="bg-[#FF748D] text-white rounded font-normal lg:text-sm lg:px-4 lg:py-2">
-                            {isLoading ? <ClipLoader
-                                size={10}
-                                color="white"
-                            /> : "Login"}
-                        </button>
-                    </div>
-                </form>
+    useEffect(() => {
+        return () => {
+            setError("")
+            setIsLoading(false)
+            setSuccess("")
+        }
+    }, []);
+    return (
+        <div
+            className="md:py-8 md:px-48 xl:py-10 xl:px-28 flex flex-row justify-between items-center md:gap-28 xl:gap-32">
+            <div className="flex-1">
+                <h3 className="text-[#FF748D] font-medium md:text-2xl xl:text-3xl">TweetX</h3>
+                <Link to="/signup">
+                    <button
+                        className="border-2 border-[#C1C1C1] rounded-xl md:px-8 md:py-2 md:my-8 xl:my-8 xl:py-2 xl:px-12 xl:text-sm xl:font-medium">Create
+                        Account
+                    </button>
+                </Link>
+                <h1 className="text-[#5D676E] font-bold md:mt-8 md:mb-4 md:text-2xl xl:mt-10 xl:mb-4 xl:text-3xl">Login</h1>
                 <div>
-                    <img className="lg:h-96" src="/Images/login-tweetx.svg" alt="SignupScreen-Tweetx"/>
+                    <form ref={loginFormRef} className="flex flex-col md:gap-7 md:my-8 xl:gap-8 xl:my-8">
+                        <input className="bg-[#f9f9f9] rounded md:p-3 xl:p-4 xl:text-sm" type="email"
+                               placeholder="Email"
+                               name="email"/>
+                        <input className="bg-[#f9f9f9] rounded md:p-3 xl:p-4 xl:text-sm" type="password"
+                               placeholder="Password"
+                               name="password"/>
+                        <div className="text-right flex flex-row justify-between items-center">
+                            <span>Forgot Password?</span>
+                            <button onClick={handleLogin}
+                                    className="bg-[#FF748D] shadow-xl text-white rounded font-normal md:px-6 md:py-2 xl:text-sm xl:px-6 xl:py-2">
+                                {isLoading ? <ClipLoader
+                                    size={10}
+                                    color="white"
+                                /> : "Login"}
+                            </button>
+                        </div>
+                        {error && <ErrorMessage message={error}/>}
+                        {success && <SuccessMessage message={success}/>}
+                    </form>
                 </div>
             </div>
+            <div className="flex-1 hidden lg:block">
+                <img className="aspect-auto" src="/Images/login-tweetx.svg"
+                     alt="Login-Pic"/>
+            </div>
         </div>
+
     )
 }
