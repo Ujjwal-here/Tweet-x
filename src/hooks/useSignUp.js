@@ -1,22 +1,23 @@
-import {useRef, useState} from "react";
+import {useContext, useRef, useState} from "react";
 import {createUserWithEmailAndPassword} from "firebase/auth";
 import {auth, db} from "../firebase/config";
 import {addDoc, collection,doc,setDoc} from "firebase/firestore";
 import {useNavigate} from "react-router-dom";
+import {TweetXContext} from "../context/TweetXContext";
 
 export const useSignup = () => {
-    const [isLoading, setIsLoading] = useState(false)
-    const [error, setError] = useState("")
-    const formRef = useRef()
+    const {isLoading, setIsLoading,success, setSuccess, error, setError}= useContext(TweetXContext)
+    const signUpFormRef = useRef()
     const navigate= useNavigate()
 
-    async function handleSubmit(e) {
+    async function handleSignup(e) {
         setIsLoading(true)
         e.preventDefault()
-        const name = formRef.current[0].value
-        const email = formRef.current[1].value
-        const password = formRef.current[1].value
-        const confirmPassword = formRef.current[1].value
+        const name = signUpFormRef.current[0].value
+        const email = signUpFormRef.current[1].value
+        const password = signUpFormRef.current[2].value
+        const confirmPassword = signUpFormRef.current[3].value
+
         try {
             if (password !== confirmPassword) {
                 return setError("Passwords do not match")
@@ -34,6 +35,7 @@ export const useSignup = () => {
                 followers:[],
                 following: []
             })
+            setSuccess("User Registered Successfully")
             setIsLoading(false)
             navigate("/feed")
         } catch (e) {
@@ -42,5 +44,5 @@ export const useSignup = () => {
         }
     }
 
-    return {isLoading, setIsLoading, error, setError, formRef, handleSubmit}
+    return {isLoading, setIsLoading, error, setError, signUpFormRef, handleSignup}
 }
