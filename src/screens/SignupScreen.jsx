@@ -1,39 +1,51 @@
 import {useSignup} from "../hooks/useSignUp";
 import {Link} from "react-router-dom";
 import {ClipLoader} from "react-spinners";
+import {useContext} from "react";
+import {TweetXContext} from "../context/TweetXContext";
 
 
 export const SignupScreen = () => {
-
-    const {isLoading,setIsLoading,error,setError,formRef,handleSubmit} = useSignup()
+    const {isLoading, error, setError} = useContext(TweetXContext)
+    const {signUpFormRef, handleSignup} = useSignup()
 
     return (
-        <div className="py-10 px-28">
-            <h3 className="text-[#FF748D] font-medium lg:text-2xl">TweetX</h3>
-            <Link to="/login" ><button className="border-2 border-[#C1C1C1] rounded-xl lg:my-10 lg:py-2 lg:px-16 lg:text-sm lg:font-medium">Login</button></Link>
-            <h1 className="text-[#5D676E] font-semibold lg:mt-8 lg:mb-4 lg:text-3xl">Create Account</h1>
-            <div className="flex flex-row">
-                <form ref={formRef} className="flex-1 flex flex-col gap-8 lg:my-8 lg:pr-80">
-                    <input className="bg-[#f9f9f9] rounded lg:p-4 lg:text-sm" type="text" placeholder="Name"
-                           name="name"/>
-                    <input className="bg-[#f9f9f9] rounded lg:p-4 lg:text-sm" type="email" placeholder="Email"
-                           name="email"/>
-                    <input className="bg-[#f9f9f9] rounded lg:p-4 lg:text-sm" type="password" placeholder="Password"
-                           name="password"/>
-                    <input className="bg-[#f9f9f9] rounded lg:p-4 lg:text-sm"
-                           type="password" placeholder="Confirm Password" name="confirmPassword"/>
-                    <button onClick={handleSubmit}
-                            className="bg-[#FF748D] text-white rounded font-normal lg:text-sm lg:px-4 lg:py-2">
-                        {isLoading ? <ClipLoader
-                            size={10}
-                            color="white"
-                        /> : "Signup"}
+        <div className="md:py-8 md:px-48 xl:py-10 xl:px-28 flex flex-row justify-between items-center md:gap-28 xl:gap-32">
+            <div className="flex-1">
+                <h3 className="text-[#FF748D] font-medium md:text-2xl xl:text-3xl">TweetX</h3>
+                <Link to="/login">
+                    <button
+                        className="border-2 border-[#C1C1C1] rounded-xl md:px-14 md:py-2 md:my-8 xl:my-8 xl:py-2 xl:px-16 xl:text-sm xl:font-medium">Login
                     </button>
-                </form>
+                </Link>
+                <h1 className="text-[#5D676E] font-bold md:mt-8 md:mb-4 md:text-2xl xl:mt-10 xl:mb-4 xl:text-3xl">Create Account</h1>
                 <div>
-                    <img className="h-96" src="/Images/signup_tweetx.svg" alt="SignupScreen-Tweetx"/>
+                    <form ref={signUpFormRef} className="flex flex-col md:gap-7 md:my-8 xl:gap-8 xl:my-8">
+                        <input className="bg-[#f9f9f9] rounded md:p-3 xl:p-4 xl:text-sm" type="text" placeholder="Name"
+                               name="name"/>
+                        <input className="bg-[#f9f9f9] rounded md:p-3 xl:p-4 xl:text-sm" type="email" placeholder="Email"
+                               name="email"/>
+                        <input className="bg-[#f9f9f9] rounded md:p-3 xl:p-4 xl:text-sm" type="password" placeholder="Password"
+                               name="password"/>
+                        <input className="bg-[#f9f9f9] rounded md:p-3 xl:p-4 xl:text-sm"
+                               type="password" placeholder="Confirm Password" name="confirmPassword"/>
+                        <div className="text-right">
+                            <button onClick={handleSignup}
+                                    className="bg-[#FF748D] shadow-xl text-white rounded font-normal md:px-6 md:py-2 xl:text-sm xl:px-6 xl:py-2">
+                                {isLoading ? <ClipLoader
+                                    size={10}
+                                    color="white"
+                                /> : "Sign up"}
+                            </button>
+                        </div>
+                    </form>
                 </div>
+            </div>
+            <div className="flex-1 hidden lg:block">
+                <img className="aspect-auto" src="/Images/signup_tweetx.svg"
+                     alt="SignupScreen-Tweetx"/>
             </div>
         </div>
     )
 }
+
