@@ -1,4 +1,5 @@
 export const UserCard = ({user}) => {
+
     return (
         <div className="lg:px-24">
             <div className="flex flex-row justify-between items-center">
