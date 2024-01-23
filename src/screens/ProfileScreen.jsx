@@ -20,6 +20,13 @@ export const ProfileScreen = () => {
 
     const [userData, setUserData] = useState()
 
+    const [activeList, setActiveList] = useState(null);
+
+    const changeColor = (listId) => {
+        // Set the active list and update the state
+        setActiveList(listId);
+    };
+
     async function getAllLoggedInUserData() {
         try {
             setProfileLoader(true)
@@ -60,17 +67,17 @@ export const ProfileScreen = () => {
                     <div className="flex flex-col md:gap-y-4 md:my-8 lg:gap-y-6 lg:my-8 xl:gap-y-8 xl:my-10">
                         <h3 className="font-medium md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl text-[#707070]">{userData[0].name}</h3>
                         <div className="flex flex-row md:gap-7 lg:gap-9 xl:gap-10">
-                            <span className="text-[#B7B7B7] md:text-sm lg:text-base xl:text-lg 2xl:text-xl">Posts: {posts?.length}</span>
-                            <span className="text-[#B7B7B7] md:text-sm lg:text-base xl:text-lg 2xl:text-xl">Followers: {userData[0].followers.length}</span>
-                            <span className="text-[#B7B7B7] md:text-sm lg:text-base xl:text-lg 2xl:text-xl">Following: {userData[0].following.length}</span>
+                            <span className={`text-[#B7B7B7] md:text-sm lg:text-base xl:text-lg 2xl:text-xl`}>Posts: {posts?.length}</span>
+                            <span className={`text-[#B7B7B7] md:text-sm lg:text-base xl:text-lg 2xl:text-xl`}>Followers: {userData[0].followers.length}</span>
+                            <span className={`text-[#B7B7B7] md:text-sm lg:text-base xl:text-lg 2xl:text-xl`}>Following: {userData[0].following.length}</span>
                     </div>
                 </div>
             </div>
-                <hr className="md:mt-6 xl:mt-10 md:mb-5 border-[#B7B7B7]"/>
+                <hr className="md:mt-6 xl:mt-10 border-[#B7B7B7]"/>
                 <div className="flex flex-row justify-between md:mb-10 md:gap-6 md:mx-20 lg:gap-8 lg:mx-28 xl:gap-10 xl:mx-40">
-                <Link to="/profile/posts" className="text-[#B7B7B7] md:text-sm lg:text-sm xl:text-base 2xl:text-lg"><i className="fa-solid fa-book"></i>{" "}Posts</Link>
-                <Link to="/profile/followers" className="text-[#B7B7B7] md:text-sm lg:text-sm xl:text-base 2xl:text-lg"><i className="fa-solid fa-thumbs-up"></i>{" "}Followers</Link>
-                <Link to="/profile/following" className="text-[#B7B7B7]  md:text-sm lg:text-sm xl:text-base 2xl:text-lg"><i className="fa-solid fa-address-book"></i>{" "}Following</Link>
+                <Link to="/profile/posts" onClick={() => changeColor('list1')} className={`${activeList === 'list1' ? 'border-t-2 border-[#747474] text-[#747474]' : 'text-[#bfbfbf]'} text-[#B7B7B7] text-center flex-1 sm:pt-3 md:text-sm lg:text-sm xl:text-base 2xl:text-lg`}><i className="fa-solid fa-book"></i>{" "}Posts</Link>
+                <Link to="/profile/followers" onClick={() => changeColor('list2')} className={`${activeList === 'list2' ? 'border-t-2 border-[#747474] text-[#747474]' : 'text-[#bfbfbf]'} text-[#B7B7B7] text-center sm:pt-3 flex-1 md:text-sm lg:text-sm xl:text-base 2xl:text-lg`}><i className="fa-solid fa-thumbs-up"></i>{" "}Followers</Link>
+                <Link to="/profile/following" onClick={() => changeColor('list3')} className={`${activeList === 'list3' ? 'border-t-2 border-[#747474] text-[#747474]' : 'text-[#bfbfbf]'} text-[#B7B7B7] text-center sm:pt-3 flex-1 md:text-sm lg:text-sm xl:text-base 2xl:text-lg`}><i className="fa-solid fa-address-book"></i>{" "}Following</Link>
             </div>
             <Outlet/>
             </>
