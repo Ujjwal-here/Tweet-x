@@ -1,34 +1,43 @@
 import {PostCard} from "../components/PostCard";
-import {collection, getDocs, orderBy, query,doc,where,documentId} from "firebase/firestore";
-import {db} from "../firebase/config";
-import {useEffect, useState} from "react";
+import {useContext, useEffect} from "react";
+import {TweetXContext} from "../context/TweetXContext";
+import {ClipLoader} from "react-spinners";
+import {ErrorMessage} from "../components/ErrorMessage";
+import {InfoMessage} from "../components/InfoMessage";
 
 export const PostsScreen = () => {
-    const [posts, setPosts] = useState([])
-    async function fetchAllPosts() {
-        const uid= localStorage.getItem("uid")
-        const data = []
-        const booksRef = collection(db,'posts')
-        const q = query(booksRef, where(documentId(), '==', uid))
-        const docSnap= await getDocs(q)
-        docSnap.forEach((doc)=>{
-            data.push(doc.data())
-        })
-        setPosts(data)
-    }
+    const {
+        isLoading,
+        setIsLoading,
+        success,
+        setSuccess,
+        error,
+        setError,
+        posts,
+        fetchAllLoggedInPosts
+    } = useContext(TweetXContext)
 
 
     useEffect(() => {
-        try {
-            fetchAllPosts()
-        } catch (e) {
-            console.log(e.message)
-        }
+        fetchAllLoggedInPosts()
 
+        return () => {
+            setIsLoading(false)
+            setSuccess("")
+            setError("")
+        }
     }, [])
+
+    if (isLoading) {
+        return <div className="flex flex-row justify-center items-center my-20"><ClipLoader size={50} color="black"/>
+        </div>
+    }
+
     return (
         <div className="lg:my-16">
-            {posts && posts.map((post)=>{
+            {error && <div className="flex flex-row justify-center"><ErrorMessage message={error}/></div>}
+            {posts.length===0 && <div className="flex flex-row justify-center"><InfoMessage message="No Post Found!"/> </div>}
+            {posts && posts.map((post) => {
                 return <PostCard key={post.timestamp.seconds} post={post} />
             })}
         </div>
