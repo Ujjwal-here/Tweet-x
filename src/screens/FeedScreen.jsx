@@ -51,9 +51,9 @@ export const FeedScreen = () => {
     }
 
     return (
-        <div className="md:mx-28 lg:mx-40 xl:mx-72">
+        <div className="md:mx-24 lg:mx-48 xl:mx-72">
             <button onClick={openModalHandler} data-modal-target="authentication-modal" data-modal-toggle="authentication-modal"
-                    className="bg-[#FF748D] shadow-xl text-white rounded font-normal md:text-xs md:px-6 md:py-2 md:mt-10 lg:text-sm lg:mx-24 xl:text-sm xl:px-6 xl:py-2 xl:mx-24 xl:mt-10">Create
+                    className="bg-[#FF748D] shadow-xl text-white rounded font-normal md:text-xs md:px-6 md:py-2 md:mt-10 lg:text-sm md:mx-16 lg:mx-20 xl:text-sm xl:px-6 xl:py-2  xl:mx-24 xl:mt-10">Create
                 Post
             </button>
             {posts && posts.map((post)=>{
