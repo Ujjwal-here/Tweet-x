@@ -1,30 +1,59 @@
 import {Link, Outlet} from "react-router-dom";
+import {useContext, useEffect, useState} from "react";
+import {TweetXContext} from "../context/TweetXContext";
+import {collection, documentId, getDocs, query, where} from "firebase/firestore";
+import {db} from "../firebase/config";
+import {useProfile} from "../hooks/useProfile";
+import {ClipLoader} from "react-spinners";
+import {ErrorMessage} from "../components/ErrorMessage";
 
 export const ProfileScreen = () => {
+    const {
+        error,
+        posts,
+        fetchAllLoggedInPosts
+    } = useContext(TweetXContext)
+
+    const {profileLoader,userData,getAllLoggedInUserData}=useProfile()
+
+
+    useEffect(() => {
+        getAllLoggedInUserData()
+        fetchAllLoggedInPosts()
+    }, []);
+
+    if (profileLoader) {
+        return <div className="flex flex-row justify-center items-center h-lvh"><ClipLoader size={50} color="black"/>
+        </div>
+    }
     return (
-        <div className="lg:mx-96 lg:my-10">
-            <div className="flex flex-row lg:gap-28">
+        <div className="md:mx-32 md:my-10 lg:mx-52 lg:my-14 xl:mx-72 xl:my-16 2xl:mx-96">
+            {error && <ErrorMessage message="Couldn't fetch Profile"/> }
+            {userData && <>
+                <div className="flex flex-row md:gap-20 lg:gap-24 xl:gap-28">
                 <div>
-                    <img className="inline-block lg:h-32 lg:w-32 rounded-full ring-2 ring-white"
-                         src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                    <img className="inline-block md:h-20 md:w-20 lg:h-28 lg:w-28 xl:h-32 xl:w-32 rounded-full ring-2 ring-white"
+                         src="https://images.pexels.com/photos/11873209/pexels-photo-11873209.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                          alt="profile_pic"/>
                 </div>
-                <div className="flex flex-col lg:gap-y-8 lg:my-10">
-                    <h3 className="font-medium text-2xl text-[#707070]">Arjun Reddy</h3>
-                    <div className="flex flex-row lg:gap-10">
-                        <span className="text-[#B7B7B7]">Posts: 500</span>
-                        <span className="text-[#B7B7B7]">Followers: 500</span>
-                        <span className="text-[#B7B7B7]">Following: 500</span>
+                    <div className="flex flex-col md:gap-y-4 md:my-8 lg:gap-y-6 lg:my-8 xl:gap-y-8 xl:my-10">
+                        <h3 className="font-medium md:text-lg lg:text-xl xl:text-2xl 2xl:text-3xl text-[#707070]">{userData[0].name}</h3>
+                        <div className="flex flex-row md:gap-7 lg:gap-9 xl:gap-10">
+                            <span className="text-[#B7B7B7] md:text-sm lg:text-base xl:text-lg 2xl:text-xl">Posts: {posts?.length}</span>
+                            <span className="text-[#B7B7B7] md:text-sm lg:text-base xl:text-lg 2xl:text-xl">Followers: {userData[0].followers.length}</span>
+                            <span className="text-[#B7B7B7] md:text-sm lg:text-base xl:text-lg 2xl:text-xl">Following: {userData[0].following.length}</span>
                     </div>
                 </div>
             </div>
-            <hr className="lg:mt-10 lg:mb-5 border-[#B7B7B7]"/>
-            <div className="flex flex-row justify-between lg:gap-10 lg:mx-36">
-                <Link to="/profile/posts" className="text-[#B7B7B7]"><i className="fa-solid fa-book"></i>{" "}Posts</Link>
-                <Link to="/profile/followers" className="text-[#B7B7B7]"><i className="fa-solid fa-thumbs-up"></i>{" "}Followers</Link>
-                <Link to="/profile/following" className="text-[#B7B7B7]"><i className="fa-solid fa-address-book"></i>{" "}Following</Link>
+                <hr className="md:mt-6 xl:mt-10 md:mb-5 border-[#B7B7B7]"/>
+                <div className="flex flex-row justify-between md:mb-10 md:gap-6 md:mx-20 lg:gap-8 lg:mx-28 xl:gap-10 xl:mx-40">
+                <Link to="/profile/posts" className="text-[#B7B7B7] md:text-sm lg:text-sm xl:text-base 2xl:text-lg"><i className="fa-solid fa-book"></i>{" "}Posts</Link>
+                <Link to="/profile/followers" className="text-[#B7B7B7] md:text-sm lg:text-sm xl:text-base 2xl:text-lg"><i className="fa-solid fa-thumbs-up"></i>{" "}Followers</Link>
+                <Link to="/profile/following" className="text-[#B7B7B7]  md:text-sm lg:text-sm xl:text-base 2xl:text-lg"><i className="fa-solid fa-address-book"></i>{" "}Following</Link>
             </div>
             <Outlet/>
+            </>
+            }
         </div>
     )
 }
