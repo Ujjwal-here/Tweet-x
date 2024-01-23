@@ -1,39 +1,53 @@
 import {createContext, useRef, useState} from "react";
-import {addDoc, collection, doc, setDoc} from "firebase/firestore";
+import {collection, documentId, getDocs, query, where} from "firebase/firestore";
 import {db} from "../firebase/config";
-import {Timestamp} from "firebase/firestore";
 
 export const TweetXContext = createContext(null);
+
 export const TweetXProvider = ({children}) => {
+
     const [isOpen, setIsOpen] = useState(false)
     const [isLoading,setIsLoading]=useState(false)
+    const [success, setSuccess] = useState("")
     const [error,setError]=useState("")
-    const formRef = useRef()
+    const [posts,setPosts]=useState([])
+    const postFormRef = useRef()
 
-    async function createPostHandler(e){
-        setIsLoading(prevState => !prevState)
-        e.preventDefault()
-        const name= formRef.current[0].value
-        const description= formRef.current[1].value
+
+    const loggedInUid = localStorage.getItem("uid")
+
+    async function fetchAllLoggedInPosts(){
         try{
-            const uid= localStorage.getItem("uid")
-            const docRef = doc(db, 'posts', uid)
-            const result = await setDoc(docRef, {
-                uid,
-                name,
-                description,
-                timestamp: Timestamp.now()
+            setIsLoading(true)
+            const data = []
+            const postsRef = collection(db,'posts')
+            const q = query(postsRef, where(documentId(), '==', loggedInUid))
+            const docSnap= await getDocs(q)
+            docSnap.forEach((doc)=>{
+                data.push(...doc.data().posts)
             })
-            setIsLoading(prevState => !prevState)
+            setPosts(data)
+            setIsLoading(false)
         }
         catch (e) {
             setError(e.message)
-            setIsLoading(prevState => !prevState)
+            setIsLoading(false)
         }
-        setIsOpen(prevState => !prevState)
     }
+
+
     const data={
-        isOpen, setIsOpen, formRef,createPostHandler
+        isOpen,
+        setIsOpen,
+        isLoading,
+        setIsLoading,
+        success,
+        setSuccess,
+        error,
+        setError,
+        postFormRef,
+        posts,
+        fetchAllLoggedInPosts,
     }
     return (
         <TweetXContext.Provider value={data}>
