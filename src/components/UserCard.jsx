@@ -4,7 +4,7 @@ import {useContext, useEffect, useState} from "react";
 import {TweetXContext} from "../context/TweetXContext";
 
 export const UserCard = ({user}) => {
-    const {isLoading, setIsLoading, success, setSuccess, error, setError} = useContext(TweetXContext)
+    const {isLoading, setIsLoading, error, setError} = useContext(TweetXContext)
     const loggedInUid = localStorage.getItem("uid")
     const [follow, setFollow] = useState("Follow")
 
@@ -16,13 +16,11 @@ export const UserCard = ({user}) => {
         }
     }
 
-    console.log(follow)
     useEffect(() => {
         checkIfFollowing()
         return () => {
             setIsLoading(false)
             setError("")
-            setSuccess("")
         }
     }, []);
 
