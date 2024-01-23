@@ -58,9 +58,9 @@ export const UserCard = ({user}) => {
         }
     }
     return (
-        <div className="md:px-14 lg:px-16 xl:px-20">
+        <div className="md:px-16 lg:px-20 xl:px-24">
             <div className="flex flex-row justify-between items-center">
-                <div className="flex flex-row items-center md:gap-8 lg:gap-8 xl:gap-10">
+                <div className="flex flex-row items-center md:gap-8">
                     <div>
                         <img
                             className="inline-block md:h-12 md:w-12 lg:h-14 lg:w-14 xl:h-16 xl:w-16 rounded-full ring-2 ring-white"

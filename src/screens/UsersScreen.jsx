@@ -1,34 +1,16 @@
 import {UserCard} from "../components/UserCard";
 import {useContext, useEffect, useState} from "react";
-import {collection, getDocs} from "firebase/firestore";
-import {db} from "../firebase/config";
+
 import {TweetXContext} from "../context/TweetXContext";
 import {ClipLoader} from "react-spinners";
+import {useUser} from "../hooks/useUser";
+import {ErrorMessage} from "../components/ErrorMessage";
+import {InfoMessage} from "../components/InfoMessage";
 
 export const UsersScreen = () => {
-    const [usersData, setUsersData] = useState([])
-    const {isLoading, setIsLoading, success, setSuccess, error, setError} = useContext(TweetXContext)
+    const {isLoading, setIsLoading, error, setError} = useContext(TweetXContext)
+    const {getAllUsers,usersData}= useUser()
 
-
-    async function getAllUsers() {
-        try {
-            setIsLoading(true)
-            const data = []
-            const querySnapshot = await getDocs(collection(db, "users"));
-            querySnapshot.forEach((doc) => {
-                if (doc.data().uid !== localStorage.getItem("uid")) {
-                    data.push(doc.data())
-                }
-            })
-            setUsersData(data)
-            setIsLoading(false)
-            setSuccess("User Fetched Successfully")
-        } catch (e) {
-            setError(e.message)
-            setIsLoading(false)
-        }
-
-    }
 
     useEffect(() => {
         getAllUsers()
@@ -36,16 +18,18 @@ export const UsersScreen = () => {
         return () => {
             setIsLoading(false)
             setError("")
-            setSuccess("")
         }
     }, [])
 
-    if (isLoading){
-        return <div className="flex flex-row justify-center items-center h-lvh"><ClipLoader size={50} color="black"/></div>
+    if (isLoading) {
+        return <div className="flex flex-row justify-center items-center h-lvh"><ClipLoader size={50} color="black"/>
+        </div>
     }
 
     return (
-        <div className="md:mx-24 lg:mx-48 xl:mx-72 xl:my-20">
+        <div className="md:mx-24 md:my-12 lg:mx-48 lg:my-16 xl:mx-72 xl:my-20 2xl:mx-96">
+            {usersData.length ===0 && <InfoMessage message="No Users Found !"/>}
+            {error && <ErrorMessage message={error}/> }
             {usersData && usersData.map((user) => {
                 return <UserCard key={user.uid} user={user}/>
             })}
