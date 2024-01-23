@@ -1,17 +1,25 @@
-import {useContext, useEffect} from "react";
+import {useContext, useEffect, useState} from "react";
 import {TweetXContext} from "../context/TweetXContext";
-import {doc, setDoc, Timestamp} from "firebase/firestore";
+import {
+    arrayUnion,
+    collection,
+    doc,
+    documentId,
+    getDocs,
+    query,
+    setDoc,
+    Timestamp,
+    updateDoc,
+    where
+} from "firebase/firestore";
 import {db} from "../firebase/config";
 import {ClipLoader} from "react-spinners";
 
 export const CreatePostModal = () => {
+    const [modalLoader, setModalLoader] = useState(false)
     const {
         isOpen,
         setIsOpen,
-        isLoading,
-        setIsLoading,
-        success,
-        setSuccess,
         error,
         setError,
         postFormRef
@@ -22,24 +30,33 @@ export const CreatePostModal = () => {
     }
 
     async function createPostHandler(e) {
+        setModalLoader(true)
         e.preventDefault()
         const name = postFormRef.current[0].value
         const description = postFormRef.current[1].value
         try {
-            setIsLoading(true)
             const uid = localStorage.getItem("uid")
+            let containsUid = false
             const docRef = doc(db, 'posts', uid)
-            const result = await setDoc(docRef, {
-                uid,
-                name,
-                description,
-                timestamp: Timestamp.now()
-            })
-            setIsLoading(false)
-            setSuccess("Post Created Successfully")
+            const postRef = collection(db, 'posts')
+            const q = query(postRef, where(documentId(), '==', uid))
+            const docSnap = await getDocs(q)
+            if (docSnap.size > 0) {
+                await updateDoc(docRef, {
+                    posts: arrayUnion({name, description, timestamp: Timestamp.now()})
+                })
+            } else {
+                const result = await setDoc(docRef, {
+                    uid,
+                    posts: [
+                        {name, description, timestamp: Timestamp.now()}
+                    ]
+                })
+            }
+            setModalLoader(false)
         } catch (e) {
             setError(e.message)
-            setIsLoading(false)
+            setModalLoader(false)
         }
 
         setIsOpen(false)
@@ -47,9 +64,8 @@ export const CreatePostModal = () => {
 
     useEffect(() => {
         return () => {
-            setIsLoading(false)
+            setModalLoader(false)
             setError("")
-            setSuccess("")
         }
     }, []);
     return (
@@ -100,7 +116,7 @@ export const CreatePostModal = () => {
                                           d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
                                           clipRule="evenodd"></path>
                                 </svg>
-                                {isLoading ? <ClipLoader
+                                {modalLoader ? <ClipLoader
                                     size={10}
                                     color="white"
                                 /> : "Create Post"}
