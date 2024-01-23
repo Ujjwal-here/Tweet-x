@@ -1,14 +1,14 @@
-import {useContext, useRef, useState} from "react";
+import {useContext, useRef} from "react";
 import {createUserWithEmailAndPassword} from "firebase/auth";
 import {auth, db} from "../firebase/config";
-import {addDoc, collection,doc,setDoc} from "firebase/firestore";
+import {doc, setDoc} from "firebase/firestore";
 import {useNavigate} from "react-router-dom";
 import {TweetXContext} from "../context/TweetXContext";
 
 export const useSignup = () => {
-    const {isLoading, setIsLoading,success, setSuccess, error, setError}= useContext(TweetXContext)
+    const {isLoading, setIsLoading, success, setSuccess, error, setError} = useContext(TweetXContext)
     const signUpFormRef = useRef()
-    const navigate= useNavigate()
+    const navigate = useNavigate()
 
     async function handleSignup(e) {
         setIsLoading(true)
@@ -32,7 +32,7 @@ export const useSignup = () => {
                 uid,
                 name,
                 email,
-                followers:[],
+                followers: [],
                 following: []
             })
             setSuccess("User Registered Successfully")
