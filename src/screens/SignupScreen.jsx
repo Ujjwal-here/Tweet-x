@@ -4,22 +4,22 @@ import {ClipLoader} from "react-spinners";
 import {useContext, useEffect} from "react";
 import {TweetXContext} from "../context/TweetXContext";
 import {ErrorMessage} from "../components/ErrorMessage";
-import {SuccessMessage} from "../components/SuccessMessage";
 
 
 export const SignupScreen = () => {
-    const {isLoading, setIsLoading, success, setSuccess, error, setError} = useContext(TweetXContext)
+    const {isLoading, setIsLoading, error, setError} = useContext(TweetXContext)
     const {signUpFormRef, handleSignup} = useSignup()
 
+    console.log(error)
     useEffect(() => {
         return () => {
             setError("")
             setIsLoading(false)
-            setSuccess("")
         }
     }, []);
     return (
-        <div className="md:py-8 md:px-48 xl:py-10 xl:px-28 flex flex-row justify-between items-center md:gap-28 xl:gap-32">
+        <div
+            className="md:py-8 md:px-48 h-lvh lg:px-24 xl:py-10 xl:px-28 flex flex-row justify-between items-center lg:gap-24     xl:gap-40">
             <div className="flex-1">
                 <h3 className="text-[#FF748D] font-medium md:text-2xl xl:text-3xl">TweetX</h3>
                 <Link to="/login">
@@ -48,7 +48,6 @@ export const SignupScreen = () => {
                             </button>
                         </div>
                         {error && <ErrorMessage message={error}/>}
-                        {success && <SuccessMessage message={success}/>}
                     </form>
                 </div>
             </div>
