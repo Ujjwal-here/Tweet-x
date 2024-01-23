@@ -5,11 +5,11 @@ export const PostCard = ({post}) => {
                  src="https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                  alt="profile_pic"/>
             <div className="md:mr-8 md:my-2 xl:mr-10 xl:my-2">
-                <h3 className="font-medium text-base text-[#8F8F8F]">{post.name}</h3>
-                <p className="font-light text-xs text-[#8F8F8F] md:mb-3 xl:mb-4 text-right">10 secs ago</p>
-                <p className="font-normal text-xs text-[#8F8F8F] ">{post.description}</p>
+                <h3 className="font-medium sm:text-base text-[#8F8F8F] 2xl:text-lg">{post.name}</h3>
+                <p className="font-light sm:text-xs text-[#8F8F8F] 2xl:text-sm md:mb-3 xl:mb-4">10 secs ago</p>
+                <p className="font-normal sm:text-xs text-[#8F8F8F] 2xl:text-sm ">{post.description}</p>
             </div>
-            <div className="absolute right-0">
+            <div className="absolute right-0 bottom-0 top-0 max-h-fit my-auto">
                 <div className="md:w-4 md:h-8 xl:w-5 xl:h-10 rounded-tl-full rounded-bl-full bg-[#FF748D]"></div>
             </div>
         </div>
