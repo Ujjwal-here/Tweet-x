@@ -19,7 +19,7 @@ export const SignupScreen = () => {
     }, []);
     return (
         <div
-            className="md:py-8 md:px-48 h-lvh lg:px-24 xl:py-10 xl:px-28 flex flex-row justify-between items-center lg:gap-24     xl:gap-40">
+            className="md:py-8 md:px-48 sm:h-lvh lg:px-24 xl:py-10 xl:px-28 flex flex-row justify-between items-center lg:gap-24 xl:gap-40">
             <div className="flex-1">
                 <h3 className="text-[#FF748D] font-medium md:text-2xl xl:text-3xl">TweetX</h3>
                 <Link to="/login">
