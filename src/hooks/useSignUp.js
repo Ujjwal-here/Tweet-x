@@ -6,7 +6,7 @@ import {useNavigate} from "react-router-dom";
 import {TweetXContext} from "../context/TweetXContext";
 
 export const useSignup = () => {
-    const {isLoading, setIsLoading, success, setSuccess, error, setError} = useContext(TweetXContext)
+    const {isLoading, setIsLoading, error, setError} = useContext(TweetXContext)
     const signUpFormRef = useRef()
     const navigate = useNavigate()
 
@@ -20,6 +20,7 @@ export const useSignup = () => {
 
         try {
             if (password !== confirmPassword) {
+                setIsLoading(false)
                 return setError("Passwords do not match")
             }
             const userCredentials = await createUserWithEmailAndPassword(auth, email, password)
@@ -35,11 +36,18 @@ export const useSignup = () => {
                 followers: [],
                 following: []
             })
-            setSuccess("User Registered Successfully")
             setIsLoading(false)
             navigate("/feed")
         } catch (e) {
-            setError(e.message)
+            if (e.code === "auth/email-already-in-use") {
+                setError("Email Already in use !")
+            }
+            if (e.code === "auth/invalid-email") {
+                setError("Invalid Email !")
+            }
+            if (e.code === "auth/weak-password"){
+                setError("Please use a strong password !")
+            }
             setIsLoading(false)
         }
     }

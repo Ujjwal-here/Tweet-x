@@ -5,7 +5,7 @@ import {auth} from "../firebase/config";
 import {TweetXContext} from "../context/TweetXContext";
 
 const useLogin = () => {
-    const {isLoading, setIsLoading, success, setSuccess, error, setError} = useContext(TweetXContext)
+    const {isLoading, setIsLoading, error, setError} = useContext(TweetXContext)
     const loginFormRef = useRef()
     const navigate = useNavigate()
 
@@ -18,12 +18,19 @@ const useLogin = () => {
             const userCredential = await signInWithEmailAndPassword(auth,email,password)
             localStorage.setItem("token", userCredential.user.accessToken)
             localStorage.setItem("uid", userCredential.user.uid)
-            setSuccess("Logged In Successfully!")
             setIsLoading(false)
             navigate("/feed")
         }
         catch (e){
-            setError(e.message)
+            if (e.code === "auth/user-not-found") {
+                setError("User not found !")
+            }
+            if (e.code === "auth/invalid-email") {
+                setError("Invalid Email !")
+            }
+            if (e.code === "auth/wrong-password"){
+                setError("Entered password is wrong !")
+            }
             setIsLoading(false)
         }
     }
