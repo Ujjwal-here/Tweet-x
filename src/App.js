@@ -16,16 +16,15 @@ function App() {
           <Routes>
               <Route path='/login' element={<LoginScreen/>}/>
               <Route path='/signup' element={<SignupScreen/>}/>
-              <Route element={<HomeScreen/>}>
-                  <Route path="/users" element={<UsersScreen/>}/>
-                  <Route path="/feed" element={<FeedScreen/>}/>
-                  <Route path="/profile" element={<ProfileScreen/>}>
+              <Route path="/" element={<HomeScreen/>}>
+                  <Route path="users" element={<UsersScreen/>}/>
+                  <Route path="feed" element={<FeedScreen/>}/>
+                  <Route path="profile" element={<ProfileScreen/>}>
                       <Route path="posts" element={<PostsScreen/>}/>
                       <Route path="followers" element={<FollowersScreen/>}/>
                       <Route path="following" element={<FollowingScreen/>}/>
                   </Route>
               </Route>
-
           </Routes>
       </BrowserRouter>
   );

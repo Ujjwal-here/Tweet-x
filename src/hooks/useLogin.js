@@ -12,8 +12,8 @@ const useLogin = () => {
     async function handleLogin(e) {
         setIsLoading(true)
         e.preventDefault()
-        const email = loginFormRef.current[0].value
-        const password = loginFormRef.current[1].value
+        const email = loginFormRef.current[0].value.trim()
+        const password = loginFormRef.current[1].value.trim()
         try{
             const userCredential = await signInWithEmailAndPassword(auth,email,password)
             localStorage.setItem("token", userCredential.user.accessToken)

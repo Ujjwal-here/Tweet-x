@@ -13,10 +13,10 @@ export const useSignup = () => {
     async function handleSignup(e) {
         setIsLoading(true)
         e.preventDefault()
-        const name = signUpFormRef.current[0].value
-        const email = signUpFormRef.current[1].value
-        const password = signUpFormRef.current[2].value
-        const confirmPassword = signUpFormRef.current[3].value
+        const name = signUpFormRef.current[0].value.trim()
+        const email = signUpFormRef.current[1].value.trim()
+        const password = signUpFormRef.current[2].value.trim()
+        const confirmPassword = signUpFormRef.current[3].value.trim()
 
         try {
             if (password !== confirmPassword) {

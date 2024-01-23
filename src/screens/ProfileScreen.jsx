@@ -20,7 +20,7 @@ export const ProfileScreen = () => {
 
     const [userData, setUserData] = useState()
 
-    const [activeList, setActiveList] = useState(null);
+    const [activeList, setActiveList] = useState("list1");
 
     const changeColor = (listId) => {
         // Set the active list and update the state

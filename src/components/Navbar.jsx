@@ -40,7 +40,7 @@ export const Navbar = () => {
                       onClick={() => changeColor('list1')}>Feed</Link>
                 <Link to="/users" className={`${activeList === 'list2' ? 'text-[#f17186]' : 'text-[#dcdcdc]'} text-[#E8EAED] md:text-sm xl:text-lg`}
                       onClick={() => changeColor('list2')}>Users</Link>
-                <Link to="/profile" className={`${activeList === 'list3' ? 'text-[#f17186]' : 'text-[#dcdcdc]'} text-[#E8EAED] md:text-sm xl:text-lg`}
+                <Link to="/profile/posts" className={`${activeList === 'list3' ? 'text-[#f17186]' : 'text-[#dcdcdc]'} text-[#E8EAED] md:text-sm xl:text-lg`}
                       onClick={() => changeColor('list3')}>Profile</Link>
             </ul>
             <button onClick={logoutHandler} data-modal-target="authentication-modal"
